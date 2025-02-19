@@ -20,7 +20,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoices.index');
     Route::get('/accounting', [AccountingController::class, 'index'])->name('accounting.index');
-
+    Route::post('/accounting', [AccountingController::class, 'store'])->name('accounting.store');
 
 });
 

@@ -8,7 +8,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div x-data="{ selectedInvoice: null, showModal: false  }" class="overflow-x-auto" class="p-6 text-gray-900">
+                <div x-data="{ selectedInvoice: null, showModal: false, whereToRecord: ''  }" class="overflow-x-auto" class="p-6 text-gray-900">
                     <div>
                         <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
                             <thead class="bg-gray-200">
@@ -37,18 +37,19 @@
                     </div>
 
                     <div class="flex justify-end gap-4 mt-4">
-                        <button type="button" class="bg-blue-500 text-white px-6 py-2 rounded-lg shadow hover:bg-blue-600 transition disabled:opacity-50" :disabled="!selectedInvoice" @click="showModal = true">
-                            Könyvelés Pénztárba
+                        <button type="button" class="bg-blue-500 text-white px-6 py-2 rounded-lg shadow hover:bg-blue-600 transition disabled:opacity-50" :disabled="!selectedInvoice" @click="showModal = true; whereToRecord = 'cash'">
+                            To Cash
                         </button>
 
-                        <button type="button" class="bg-green-500 text-white px-6 py-2 rounded-lg shadow hover:bg-green-600 transition disabled:opacity-50" :disabled="!selectedInvoice" @click="showModal = true">
-                            Könyvelés Kiegyenlítetlen Számlaként
+                        <button type="button" class="bg-green-500 text-white px-6 py-2 rounded-lg shadow hover:bg-green-600 transition disabled:opacity-50" :disabled="!selectedInvoice" @click="showModal = true; whereToRecord = 'unpaid_invoice'">
+                            To Unpaid Invoice
                         </button>
                     </div>
 
                     <!-- Modal -->
                     <div x-cloak x-show="showModal" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
                         <div class="bg-white p-6 rounded-lg shadow-lg w-96" @click.away="showModal = false">
+                            <h2 x-text="whereToRecord"></h2>
                             <h2 class="text-xl font-semibold mb-4">Invoice Details</h2>
 
                             <p><strong>Invoice No:</strong> <span x-text="selectedInvoice?.no"></span></p>
@@ -58,9 +59,24 @@
                             <p><strong>Due Date:</strong> <span x-text="selectedInvoice?.due_date"></span></p>
                             <p><strong>Total:</strong> <span x-text="selectedInvoice?.total"></span> Ft</p>
 
-                            <div class="flex justify-end mt-4">
-                                <button class="bg-red-500 text-white px-4 py-2 rounded-lg shadow hover:bg-red-600 transition" @click="showModal = false">Close</button>
-                            </div>
+                            <form x-data="{ isSaving: false }" @submit="isSaving = true" method="POST" action="{{ route('accounting.store') }}" class="mt-4">
+                                @csrf
+                                <input type="hidden" name="invoice_id" :value="selectedInvoice?.id">
+                                <input type="hidden" name="where_to_record" :value="whereToRecord">
+
+                                <div class="flex items-center gap-2">
+                                    <span>T</span>
+                                    <input type="text" name="tartozik" id="tartozik" class="border p-2 rounded w-full" required>
+
+                                    <span>K</span>
+                                    <input type="text" name="kovetel" id="kovetel" class="border p-2 rounded w-full" value="381" required>
+                                </div>
+
+                                <div class="flex justify-end gap-2 mt-4">
+                                    <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded-lg shadow hover:bg-gray-600 transition" @click="showModal = false">Mégse</button>
+                                    <button type="submit" :disabled="isSaving" class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition">Save</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                     <!-- End Modal -->
@@ -70,4 +86,3 @@
         </div>
     </div>
 </x-app-layout>
-
