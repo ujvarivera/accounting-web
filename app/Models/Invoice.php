@@ -20,4 +20,9 @@ class Invoice extends Model
         'total'
     ];
 
+    public function accountedItems()
+    {
+        return $this->hasMany(AccountedItem::class);
+    }
+
 }

@@ -10,7 +10,7 @@ class AccountingController extends Controller
 {
     public function index()
     {
-        $invoices = Invoice::all();
+        $invoices = Invoice::with('accountedItems')->get();
 
         return view('accounting.index', compact('invoices'));
     }

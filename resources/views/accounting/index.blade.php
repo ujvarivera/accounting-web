@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Invoices') }}
+            {{ __('Accounting') }}
         </h2>
     </x-slot>
 
@@ -23,7 +23,7 @@
                             </thead>
                             <tbody>
                                 @foreach($invoices as $invoice)
-                                <tr class="cursor-pointer" :class="{ 'bg-blue-200': selectedInvoice && selectedInvoice.id === {{ $invoice->id }} }" @click="selectedInvoice = {{ json_encode($invoice) }}">
+                                <tr class="cursor-pointer {{ count($invoice->accountedItems) > 0 ? 'text-green-600' : '' }}" :class="{ 'bg-blue-200': selectedInvoice && selectedInvoice.id === {{ $invoice->id }} }" @click="selectedInvoice = {{ json_encode($invoice) }}">
                                     <td class="px-4 py-2 border text-center">{{ $invoice->no }}</td>
                                     <td class="px-4 py-2 border">{{ $invoice->from }}</td>
                                     <td class="px-4 py-2 border">{{ $invoice->to }}</td>
