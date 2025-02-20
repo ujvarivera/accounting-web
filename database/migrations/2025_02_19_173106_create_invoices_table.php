@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('to'); // kinek
             $table->date('date')->nullable(); // kelt
             $table->date('due_date')->nullable(); // fizetési határidő
-            $table->float('total')->nullable(); // fizetendő összeg
+            $table->decimal('total', 10, 2)->nullable(); // fizetendő összeg
             //$table->timestamps();
         });
     }
