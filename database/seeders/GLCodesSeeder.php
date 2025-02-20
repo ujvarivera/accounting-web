@@ -15,6 +15,22 @@ class GLCodesSeeder extends Seeder
     {
         GeneralLedgerCode::insert([
             [
+                'code' => 381,
+                'name' => 'Cash Register',
+            ],
+            [
+                'code' => 389,
+                'name' => 'Technical',
+            ],
+            [
+                'code' => 384,
+                'name' => 'Settlement Account',
+            ],
+            [
+                'code' => 454,
+                'name' => 'Suppliers',
+            ],
+            [
                 'code' => 51,
                 'name' => 'Costs of Purchased Materials',
             ],

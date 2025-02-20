@@ -48,7 +48,7 @@
 
                     <!-- Modal -->
                     <div x-cloak x-show="showModal" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
-                        <div class="bg-white p-6 rounded-lg shadow-lg w-96" @click.away="showModal = false">
+                        <div class="bg-white p-6 rounded-lg shadow-lg w-200" @click.away="showModal = false">
                             <h2 x-text="whereToRecord"></h2>
                             <h2 class="text-xl font-semibold mb-4">Invoice Details</h2>
 
@@ -66,15 +66,24 @@
 
                                 <div class="flex items-center gap-2">
                                     <span>T</span>
-                                    <input type="text" name="tartozik" id="tartozik" class="border p-2 rounded w-full" required>
-
+                                    <select name="tartozik" id="tartozik" class="bg-gray-200 px-2 py-1 rounded">
+                                        <option value="" disabled selected>Select GL Code</option>
+                                        @foreach($glcodes as $code)
+                                        <option value="{{ $code->code }}">{{ $code->code }} - {{ __($code->name) }}</option>
+                                        @endforeach
+                                    </select>
                                     <span>K</span>
-                                    <input type="text" name="kovetel" id="kovetel" class="border p-2 rounded w-full" value="381" required>
+                                    <select name="kovetel" id="kovetel" class="bg-gray-200 px-2 py-1 rounded" :value="whereToRecord === 'cash' ? '381' : (whereToRecord === 'unpaid_invoice' ? '454' : '')"">
+                                        <option value="" disabled selected>Select GL Code</option>
+                                        @foreach($glcodes as $code)
+                                        <option value="{{ $code->code }}">{{ $code->code }} - {{ __($code->name) }}</option>
+                                        @endforeach
+                                    </select> 
                                 </div>
 
                                 <div class="flex justify-end gap-2 mt-4">
-                                    <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded-lg shadow hover:bg-gray-600 transition" @click="showModal = false">Mégse</button>
-                                    <button type="submit" :disabled="isSaving" class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition">Save</button>
+                                    <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded-lg shadow hover:bg-gray-600 transition" @click="showModal = false">{{ __('Cancel') }}</button>
+                                    <button type="submit" :disabled="isSaving" class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition">{{ __('Save') }}</button>
                                 </div>
                             </form>
                         </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AccountedItem;
+use App\Models\GeneralLedgerCode;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
 
@@ -10,9 +11,10 @@ class AccountingController extends Controller
 {
     public function index()
     {
+        $glcodes = GeneralLedgerCode::all();
         $invoices = Invoice::with('accountedItems')->get();
 
-        return view('accounting.index', compact('invoices'));
+        return view('accounting.index', compact('invoices', 'glcodes'));
     }
 
     public function store(Request $request)
