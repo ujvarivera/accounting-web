@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\GeneralLedgerCode;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use App\Models\User;
@@ -36,6 +37,10 @@ class DatabaseSeeder extends Seeder
                 'description' => '1 kilogram of bananas',
                 'cost' => '600'
             ],
+        ]);
+
+        $this->call([
+            GLCodesSeeder::class,
         ]);
     }
 }
