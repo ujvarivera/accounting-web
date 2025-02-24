@@ -31,6 +31,14 @@ class GLCodesSeeder extends Seeder
                 'name' => 'Suppliers',
             ],
             [
+                'code' => 466,
+                'name' => 'Pre-charged VAT',
+            ],
+            [
+                'code' => 467,
+                'name' => 'VAT Payable',
+            ],
+            [
                 'code' => 51,
                 'name' => 'Costs of Purchased Materials',
             ],

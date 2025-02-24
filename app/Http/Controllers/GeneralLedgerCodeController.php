@@ -12,7 +12,9 @@ class GeneralLedgerCodeController extends Controller
      */
     public function index()
     {
-        //
+        $glcodes = GeneralLedgerCode::all();
+
+        return view('glcodes.index', compact('glcodes'));
     }
 
     /**
@@ -28,7 +30,17 @@ class GeneralLedgerCodeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'code' => 'required|numeric',
+            'name' => 'required|string|max:30',
+        ]);
+
+        GeneralLedgerCode::create([
+            'code' => $request->code,
+            'name' => $request->name,
+        ]);
+
+        return redirect()->route('glcodes.index')->with('success', 'General ledger code added successfully!');
     }
 
     /**

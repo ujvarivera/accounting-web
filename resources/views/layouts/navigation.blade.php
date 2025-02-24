@@ -18,8 +18,11 @@
                     <x-nav-link :href="route('accounting.index')" :active="request()->routeIs('accounting.index')">
                         {{ __('Accounting') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('invoices.index')" :active="request()->routeIs('Invoices.index')">
+                    <x-nav-link :href="route('invoices.index')" :active="request()->routeIs('invoices.index')">
                         {{ __('Invoices') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('glcodes.index')" :active="request()->routeIs('glcodes.index')">
+                        {{ __('GL Codes') }}
                     </x-nav-link>
                 </div>
             </div>
